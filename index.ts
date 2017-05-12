@@ -1,4 +1,4 @@
 
-export default DiographAuthentication {
-  public token = "test-token"
+export class DiographAuthentication {
+  public static token = "test-token"
 }
