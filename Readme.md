@@ -13,3 +13,9 @@ let authToken = DiographAuthentication.token
 ```
 
 
+## Development
+
+```
+tsc index.ts
+```
+
