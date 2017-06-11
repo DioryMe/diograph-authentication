@@ -2,10 +2,15 @@
   "name": "diograph-authentication",
   "version": "0.0.6",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
+    "build": "tsc src/* --outDir lib --target es6 && ./node_modules/.bin/babel lib/* -d .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jouni Alanen",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.5.2"
+  }
 }

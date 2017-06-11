@@ -16,6 +16,6 @@ let authToken = DiographAuthentication.token
 ## Development
 
 ```
-tsc index.ts
+npm run build
 ```
 
