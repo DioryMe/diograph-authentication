@@ -1,3 +1,4 @@
+import 'document-register-element'
 
 export class DiographAuthentication {
   public static token = "test-token"
