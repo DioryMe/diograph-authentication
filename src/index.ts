@@ -6,8 +6,17 @@ export class DiographAuthentication {
 
 class DiographLogin extends HTMLElement {
 
+  attachedCallback() {
+    if (localStorage.getItem("token")) {
+      document.getElementById("container").style.display="none"
+      document.getElementById("container2").style.display="block"
+    }
+    this.readAndRefreshToken();
+  }
+
   // Fires when an instance of the element is created.
   createdCallback() {
+
     this.innerHTML =  `
       <style>
         input {
@@ -22,13 +31,12 @@ class DiographLogin extends HTMLElement {
         }
       </style>
       <div id="container">
-        Username: <input>
-        Password: <input>
-        <button id="login">Login</button>
+        Token: <input id="diograph-token-input">
+        <button id="diograph-save-button">Save</button>
       </div>
       <div id="container2">
         <div>
-          Logged in as jvalanen &nbsp;&nbsp;
+          Currently using token <span id="diograph-token-span">undefined</span> &nbsp;&nbsp;
         </div>
         <div id="logout">
           Logout
@@ -36,17 +44,29 @@ class DiographLogin extends HTMLElement {
       </div>
     `;
 
-    document.getElementById("login").addEventListener('click', () => {
+    document.getElementById("diograph-save-button").addEventListener('click', () => {
       document.getElementById("container").style.display="none"
       document.getElementById("container2").style.display="block"
+      let inputFieldValue = (<HTMLInputElement>document.getElementById("diograph-token-input")).value;
+      localStorage.setItem("token", inputFieldValue);
+      this.readAndRefreshToken();
     });
 
     document.getElementById("logout").addEventListener('click', () => {
       document.getElementById("container").style.display="block"
       document.getElementById("container2").style.display="none"
+      localStorage.removeItem("token");
     });
 
   };
+
+  readAndRefreshToken() {
+    let p = document.getElementById("diograph-token-span");
+    let token = localStorage.getItem("token")
+    token = token ? token : "test-token"
+    p.innerHTML = token
+    DiographAuthentication.token = token
+  }
 
 }
 
