@@ -1,7 +1,7 @@
 import 'document-register-element'
 
 export class DiographAuthentication {
-  public static token = "test-token"
+  public static token
 }
 
 class DiographLogin extends HTMLElement {
@@ -63,7 +63,6 @@ class DiographLogin extends HTMLElement {
   readAndRefreshToken() {
     let p = document.getElementById("diograph-token-span");
     let token = localStorage.getItem("token")
-    token = token ? token : "test-token"
     p.innerHTML = token
     DiographAuthentication.token = token
   }
