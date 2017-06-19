@@ -8,8 +8,10 @@ class DiographLogin extends HTMLElement {
 
   attachedCallback() {
     if (localStorage.getItem("token")) {
-      document.getElementById("container").style.display="none"
-      document.getElementById("container2").style.display="block"
+      this.showLoggedOut();
+    } else if (window.location.search.match(/\btoken=+(.*)$/)) {
+      localStorage.setItem("token", window.location.search.match(/\btoken=+(.*)$/)[1])
+      this.showLoggedIn();
     }
     this.readAndRefreshToken();
   }
@@ -45,16 +47,14 @@ class DiographLogin extends HTMLElement {
     `;
 
     document.getElementById("diograph-save-button").addEventListener('click', () => {
-      document.getElementById("container").style.display="none"
-      document.getElementById("container2").style.display="block"
+      this.showLoggedIn()
       let inputFieldValue = (<HTMLInputElement>document.getElementById("diograph-token-input")).value;
       localStorage.setItem("token", inputFieldValue);
       this.readAndRefreshToken();
     });
 
     document.getElementById("logout").addEventListener('click', () => {
-      document.getElementById("container").style.display="block"
-      document.getElementById("container2").style.display="none"
+      this.showLoggedOut();
       localStorage.removeItem("token");
     });
 
@@ -65,6 +65,16 @@ class DiographLogin extends HTMLElement {
     let token = localStorage.getItem("token")
     p.innerHTML = token
     DiographAuthentication.token = token
+  }
+
+  showLoggedIn() {
+    document.getElementById("container").style.display="none"
+    document.getElementById("container2").style.display="block"
+  }
+
+  showLoggedOut() {
+    document.getElementById("container").style.display="block"
+    document.getElementById("container2").style.display="none"
   }
 
 }
