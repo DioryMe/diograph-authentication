@@ -2,6 +2,10 @@ import 'document-register-element'
 
 export class DiographAuthentication {
   public static token
+
+  public static onLogin();
+
+  public static onLogout();
 }
 
 class DiographLogin extends HTMLElement {
@@ -51,11 +55,13 @@ class DiographLogin extends HTMLElement {
       let inputFieldValue = (<HTMLInputElement>document.getElementById("diograph-token-input")).value;
       localStorage.setItem("token", inputFieldValue);
       this.readAndRefreshToken();
+      DiographAuthentication.onLogin();
     });
 
     document.getElementById("logout").addEventListener('click', () => {
       this.showLoggedOut();
       localStorage.removeItem("token");
+      DiographAuthentication.onLogout();
     });
 
   };
