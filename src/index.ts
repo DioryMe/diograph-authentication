@@ -12,7 +12,7 @@ class DiographLogin extends HTMLElement {
 
   attachedCallback() {
     if (localStorage.getItem("token")) {
-      this.showLoggedOut();
+      this.showLoggedIn();
     } else if (window.location.search.match(/\btoken=+(.*)$/)) {
       localStorage.setItem("token", window.location.search.match(/\btoken=+(.*)$/)[1])
       this.showLoggedIn();
