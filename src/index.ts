@@ -50,20 +50,23 @@ class DiographLogin extends HTMLElement {
       </div>
     `;
 
-    document.getElementById("diograph-save-button").addEventListener('click', () => {
-      this.showLoggedIn()
-      let inputFieldValue = (<HTMLInputElement>document.getElementById("diograph-token-input")).value;
-      localStorage.setItem("token", inputFieldValue);
-      this.readAndRefreshToken();
-      (<HTMLInputElement>document.getElementById("diograph-token-input")).value = "";
-      DiographAuthentication.onLogin();
-    });
+    let self = this;
+    setTimeout(function() {
+      document.getElementById("diograph-save-button").addEventListener('click', () => {
+        self.showLoggedIn()
+        let inputFieldValue = (<HTMLInputElement>document.getElementById("diograph-token-input")).value;
+        localStorage.setItem("token", inputFieldValue);
+        self.readAndRefreshToken();
+        (<HTMLInputElement>document.getElementById("diograph-token-input")).value = "";
+        DiographAuthentication.onLogin();
+      });
 
-    document.getElementById("logout").addEventListener('click', () => {
-      this.showLoggedOut();
-      localStorage.removeItem("token");
-      DiographAuthentication.onLogout();
-    });
+      document.getElementById("logout").addEventListener('click', () => {
+        self.showLoggedOut();
+        localStorage.removeItem("token");
+        DiographAuthentication.onLogout();
+      });
+    }, 1000)
 
   };
 
