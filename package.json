@@ -4,7 +4,7 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "build": "tsc src/* --outDir lib --target es6 && ./node_modules/.bin/babel lib/* -d .",
+    "compile": "tsc src/* --outDir lib --target es6 && ./node_modules/.bin/babel lib/* -d .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jouni Alanen",
