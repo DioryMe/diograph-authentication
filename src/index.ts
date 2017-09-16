@@ -2,6 +2,7 @@ import 'document-register-element'
 
 export class DiographAuthentication {
   public static token
+  public static isProduction = true
 
   public static onLogin = () => {};
 
@@ -56,6 +57,7 @@ class DiographLogin extends HTMLElement {
         self.showLoggedIn()
         let inputFieldValue = (<HTMLInputElement>document.getElementById("diograph-token-input")).value;
         localStorage.setItem("token", inputFieldValue);
+        localStorage.setItem("endpoint", DiographAuthentication.isProduction ? "http://diory-server.herokuapp.com/v1" : "http://localhost:3000/v1");
         self.readAndRefreshToken();
         (<HTMLInputElement>document.getElementById("diograph-token-input")).value = "";
         DiographAuthentication.onLogin();
