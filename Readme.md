@@ -36,6 +36,7 @@ You can login automatically by offering `?token=my123token345` in the url of the
 ## Development
 
 ```
-npm run build
+npm install -g typescript
+npm run compile
 ```
 
