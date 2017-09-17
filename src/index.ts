@@ -12,10 +12,10 @@ export class DiographAuthentication {
 class DiographLogin extends HTMLElement {
 
   attachedCallback() {
-    if (localStorage.getItem("token")) {
-      this.showLoggedIn();
-    } else if (window.location.search.match(/\btoken=+(.*)$/)) {
+    if (window.location.search.match(/\btoken=+(.*)$/)) {
       localStorage.setItem("token", window.location.search.match(/\btoken=+(.*)$/)[1])
+      this.showLoggedIn();
+    } else if (localStorage.getItem("token")) {
       this.showLoggedIn();
     }
     this.readAndRefreshToken();
