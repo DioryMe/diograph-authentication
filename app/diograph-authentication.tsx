@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-// export interface AuthenticationState { searchResults: any, searchTerm: string }
-// export interface AuthenticationProps { onFocusClick: any }
+export interface AuthenticationState { authenticated: boolean, authToken: string }
+export interface AuthenticationProps { onAuthenticationStateChange: any }
 
-export class DiographAuthentication extends React.Component { // <AuthenticationState, AuthenticationProps>
+export class DiographAuthentication extends React.Component <AuthenticationProps, AuthenticationState> {
 
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = { authenticated: false, authToken: null }
   }
 
   render() {
