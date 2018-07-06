@@ -16,21 +16,21 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
       html = (
         <div>
           You are now logged in! <br/>
-          <button name="Logout" onClick={ () => this.logout() } >Logout</button>
+          <button name="Logout" onClick={ () => this.executeLogout() } >Logout</button>
         </div>
       )
     } else {
       html = (
        <div>
-          You are not logged in. <br/>
-          <button name="Login" onClick={ () => this.login() } >Login</button>
+          Logged out... <br/>
+          <button name="Login" onClick={ () => this.executeLogin() } >Login</button>
         </div>
       )
     }
     return html
   }
 
-  login() {
+  executeLogin() {
     let authToken = "123123"
     this.setState({
       authenticated: true,
@@ -39,7 +39,7 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
     this.props.onAuthenticationStateChange(authToken)
   }
 
-  logout() {
+  executeLogout() {
     this.setState({
       authenticated: false,
       authToken: null
