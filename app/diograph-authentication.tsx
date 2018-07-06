@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-export interface AuthenticationState { authenticated: boolean, authToken: string }
+export interface AuthenticationState { authenticated: boolean, tokens: any }
 export interface AuthenticationProps { onAuthenticationStateChange: any }
 
 export class DiographAuthentication extends React.Component <AuthenticationProps, AuthenticationState> {
 
   constructor(props) {
     super(props)
-    this.state = { authenticated: false, authToken: null }
+    this.state = { authenticated: false, tokens: null }
   }
 
   render() {
@@ -23,28 +23,29 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
       html = (
        <div>
           Logged out... <br/>
-          <button name="Login" onClick={ () => this.executeLogin() } >Login</button>
+          <button name="Login" onClick={ () => this.executeLogin("asdfasdf") } >Login</button>
         </div>
       )
     }
     return html
   }
 
-  executeLogin() {
-    let authToken = "123123"
-    this.setState({
+  async executeLogin(loginInfo) {
+    await DiographAuthenticator.login(loginInfo)
+    await this.setState({
       authenticated: true,
-      authToken: authToken
+      tokens: DiographAuthenticator.getToken("all")
     })
-    this.props.onAuthenticationStateChange(authToken)
+    this.props.onAuthenticationStateChange(this.state.tokens)
   }
 
-  executeLogout() {
+  async executeLogout() {
+    await DiographAuthenticator.logout()
     this.setState({
       authenticated: false,
-      authToken: null
+      tokens: null
     })
-    this.props.onAuthenticationStateChange(null)
+    this.props.onAuthenticationStateChange(this.state.tokens)
   }
 
 }
