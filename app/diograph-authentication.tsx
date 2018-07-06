@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { DiographAuthenticator } from './diograph-authenticator'
 
 export interface AuthenticationState { authenticated: boolean, tokens: any }
 export interface AuthenticationProps { onAuthenticationStateChange: any }
