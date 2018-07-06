@@ -42,9 +42,9 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
 
   async executeLogout() {
     await DiographAuthenticator.logout()
-    this.setState({
+    await this.setState({
       authenticated: false,
-      tokens: null
+      tokens: DiographAuthenticator.getToken("all")
     })
     this.props.onAuthenticationStateChange(this.state.tokens)
   }

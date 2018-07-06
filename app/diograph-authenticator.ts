@@ -1,6 +1,7 @@
 export class DiographAuthenticator {
 
   static isAuthenticated() {
+    return true
     // return true if valid cookie exists
     // return false if invalid or missing cookie
   }
@@ -23,7 +24,9 @@ export class DiographAuthenticator {
   }
 
   static getToken(type) {
-    // If !isAuthenticated, return always null
+    if (!this.isAuthenticated()) {
+      return null
+    }
 
     // Read everything from cookie
     switch(type) {
@@ -34,6 +37,7 @@ export class DiographAuthenticator {
         //   tokens[name] = this.getToken(name)
         // })
         // return tokens
+        return "token from getToken('all')"
       }
       case "diograph-server": {
         // return DiographServerTokenManager.getToken()

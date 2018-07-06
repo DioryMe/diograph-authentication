@@ -7,7 +7,6 @@ describe('DiographAuthentication', () => {
   let component, authToken, wrapper
   configure({ adapter: new Adapter() })
 
-
   beforeEach(() => {
     const changeAuthToken = (token) => { authToken = token }
     wrapper = shallow(
@@ -19,13 +18,15 @@ describe('DiographAuthentication', () => {
   })
 
   it('authToken is given when logged in', () => {
-    component.executeLogin()
-    expect(authToken).toEqual("123123")
+    component.executeLogin().then(() => {
+      expect(authToken).toEqual("token from logged in spec")
+    })
   })
 
   it('authToken is null when logged out', () => {
-    component.executeLogout()
-    expect(authToken).toEqual(null)
+    component.executeLogout().then(() => {
+      expect(authToken).toEqual(null)
+    })
   })
 
 })
