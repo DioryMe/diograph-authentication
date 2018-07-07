@@ -2,30 +2,34 @@ export class DiographAuthenticator {
 
   static isAuthenticated() {
     return true
-    // return true if valid cookie exists
+    // return true if valid cookie exists (through CookieManager)
     // return false if invalid or missing cookie
   }
 
   static login(loginInfo) {
     // Return "already logged in" if isAuthenticated
 
-    // Try to retrieve master token with loginInfo
+    // Try to login with loginInfo through DiographServerManager
 
     // Success
-    // - create cookie
-    // - save master token to cookie
+    // - create cookie (through CookieManager)
+    // - retrievee tokens to cookie => this.getToken("all")
+    // - save tokens to cookie (through CookieManager)
 
     // Failure
     // - return error message
   }
 
   static logout() {
-    // Delete cookie
+    // Delete cookie (through CookieManager)
   }
 
   static getToken(type) {
     if (!this.isAuthenticated()) {
-      return null
+      return {
+        "master": null,
+        "google-maps": null
+      }
     }
 
     // Read everything from cookie
@@ -39,11 +43,13 @@ export class DiographAuthenticator {
       case "master":
       case "diograph-server": {
         return "masterTOKEN"
-        // return DiographServerTokenManager.getToken()
+        // Check if token is already found from cookie (CookieManager)
+        // return DiographServerManager.getToken()
       }
       case "google-maps": {
         return "googleMAPS"
-        // return GoogleMapsTokenManager.getToken()
+        // Check if token is already found from cookie (CookieManager)
+        // return GoogleMapsManager.getToken()
       }
     }
 

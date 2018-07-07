@@ -16,7 +16,7 @@ describe('DiographAuthenticator', () => {
 
     describe('with correct login info', () => {
       beforeEach(() => {
-        // Mock sending login info to server
+        // Mock sending login info to server (DiographServerManager)
         // Returns success
       });
 
@@ -27,7 +27,7 @@ describe('DiographAuthenticator', () => {
 
     describe('with incorrect login info', () => {
       beforeEach(() => {
-        // Mock sending login info to server
+        // Mock sending lgin info to server (DiographServerManager)
         // Returns failure
       });
     })
