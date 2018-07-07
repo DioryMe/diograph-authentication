@@ -31,18 +31,18 @@ export class DiographAuthenticator {
     // Read everything from cookie
     switch(type) {
       case "all": {
-        // let tokens = {}
-        // let tokenNames = ["diograph-server", "google-maps"]
-        // tokens.forEach((name) => {
-        //   tokens[name] = this.getToken(name)
-        // })
-        // return tokens
-        return "token from getToken('all')"
+        return {
+          "master": this.getToken('master'),
+          "google-maps": this.getToken('google-maps')
+        }
       }
+      case "master":
       case "diograph-server": {
+        return "masterTOKEN"
         // return DiographServerTokenManager.getToken()
       }
       case "google-maps": {
+        return "googleMAPS"
         // return GoogleMapsTokenManager.getToken()
       }
     }

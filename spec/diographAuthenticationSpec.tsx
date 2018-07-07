@@ -19,13 +19,19 @@ describe('DiographAuthentication', () => {
 
   it('authToken is given when logged in', () => {
     component.executeLogin().then(() => {
-      expect(authToken).toEqual("token from logged in spec")
+      expect(authToken).toEqual({
+        "master": "masterTOKEN",
+        "google-maps": "googleMAPS"
+      })
     })
   })
 
   it('authToken is null when logged out', () => {
     component.executeLogout().then(() => {
-      expect(authToken).toEqual(null)
+      expect(authToken).toEqual({
+        "master": null,
+        "google-maps": null
+      })
     })
   })
 
