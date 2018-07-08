@@ -7,6 +7,11 @@ describe('DiographAuthenticator', () => {
   })
 
   describe('isAuthenticated()', () => {
+
+    beforeEach(() => {
+      spyOn(CookieManager, 'get').and.returnValue("masterTOKEN");
+    });
+
     it('returns true', () => {
       expect(DiographAuthenticator.isAuthenticated()).toBe(true)
     })
