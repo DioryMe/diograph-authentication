@@ -1,7 +1,13 @@
+import { CookieManager } from './cookie-manager'
+
 export class DiographAuthenticator {
 
   static isAuthenticated() {
-    return CookieManager.get("master")
+    if (CookieManager.get("master")) {
+      return true
+    } else {
+      return false
+    }
     // return true if valid cookie exists (through CookieManager)
     // return false if invalid or missing cookie
   }

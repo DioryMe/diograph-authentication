@@ -1,4 +1,5 @@
 import { DiographAuthenticator } from '../app/diograph-authenticator'
+import { CookieManager } from '../app/cookie-manager'
 
 describe('DiographAuthenticator', () => {
 
@@ -8,13 +9,16 @@ describe('DiographAuthenticator', () => {
 
   describe('isAuthenticated()', () => {
 
-    beforeEach(() => {
+    it('returns true if master token is retrievable', () => {
       spyOn(CookieManager, 'get').and.returnValue("masterTOKEN");
-    });
-
-    it('returns true', () => {
       expect(DiographAuthenticator.isAuthenticated()).toBe(true)
     })
+
+    it('returns false if cannot retrieve master token', () => {
+      spyOn(CookieManager, 'get').and.returnValue(null);
+      expect(DiographAuthenticator.isAuthenticated()).toBe(false)
+    })
+
   })
 
   describe('login()', () => {

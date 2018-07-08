@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { configure, shallow, mount, render } from 'enzyme'
 import { DiographAuthentication } from '../app/diograph-authentication'
+import { CookieManager } from '../app/cookie-manager'
 import * as Adapter from 'enzyme-adapter-react-16';
 
 describe('DiographAuthentication', () => {
@@ -18,6 +19,8 @@ describe('DiographAuthentication', () => {
   })
 
   it('authToken is given when logged in', () => {
+    // Master token is saved in cookie
+    spyOn(CookieManager, 'get').and.returnValue("masterTOKEN");
     component.executeLogin().then(() => {
       expect(authToken).toEqual({
         "master": "masterTOKEN",
@@ -27,6 +30,8 @@ describe('DiographAuthentication', () => {
   })
 
   it('authToken is null when logged out', () => {
+    // Master token is not saved in cookie
+    spyOn(CookieManager, 'get').and.returnValue(null);
     component.executeLogout().then(() => {
       expect(authToken).toEqual({
         "master": null,
