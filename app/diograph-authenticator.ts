@@ -36,7 +36,7 @@ export class DiographAuthenticator {
     CookieManager.destroy()
   }
 
-  static getToken(type) {
+  static retrieveSecrets(type: string=undefined) {
     if (!this.isAuthenticated()) {
       return {
         "master": null,
@@ -46,22 +46,14 @@ export class DiographAuthenticator {
 
     // Read everything from cookie
     switch(type) {
-      case "all": {
-        return {
-          "master": this.getToken('master'),
-          "google-maps": this.getToken('google-maps')
-        }
+      case undefined: {
+        return CookieManager.getAll()
       }
-      case "master":
-      case "diograph-server": {
-        return "masterTOKEN"
-        // Check if token is already found from cookie (CookieManager)
-        // return CookieManager.get("master")
+      case "master": {
+        return CookieManager.get("master")
       }
       case "google-maps": {
-        return "googleMAPS"
-        // Check if token is already found from cookie (CookieManager)
-        // return CookieManager.get("google-maps")
+        return CookieManager.get("google-maps")
       }
     }
 

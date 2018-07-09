@@ -5,6 +5,10 @@ export class CookieManager {
     return this.content()[key]
   }
 
+  static getAll(): object {
+    return this.content()
+  }
+
   static save(contentHash: object) {
     return true
   }
