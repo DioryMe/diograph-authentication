@@ -1,4 +1,5 @@
 import { CookieManager } from './cookie-manager'
+import { DiographServerManager } from './diograph-server-manager'
 
 export class DiographAuthenticator {
 
@@ -12,24 +13,22 @@ export class DiographAuthenticator {
     }
   }
 
-  static login(loginInfo={}) {
+  static login(loginInfo: object={}) {
     // Return true if already logged in
     if (this.isAuthenticated()) {
       return true
     }
 
-/*
     // Try to login with loginInfo through DiographServerManager
     if (DiographServerManager.authenticate(loginInfo)) {
       // Retrieve tokens from server
-      tokens = DiographServerManager.getTokens()
+      let tokens = DiographServerManager.retrieveSecrets(CookieManager.get("master"))
       // Save tokens to cookie
       CookieManager.save(tokens)
       return true
     } else {
       return false
     }
-*/
 
   }
 

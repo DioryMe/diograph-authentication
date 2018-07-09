@@ -5,6 +5,10 @@ export class CookieManager {
     return true
   }
 
+  static save(contentHash: object) {
+    return true
+  }
+
   static destroy() {
     // Destroy cookie
     return false
