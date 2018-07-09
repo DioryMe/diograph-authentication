@@ -4,7 +4,7 @@ export class DiographServerManager {
     return "masterTOKEN"
   }
 
-  static retrieveSecrets(masterToken): object { // TODO: add string type to masterToken
+  static retrieveSecrets(masterToken: string): object {
     return {}
   }
 
