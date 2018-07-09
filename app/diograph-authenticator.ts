@@ -4,12 +4,12 @@ export class DiographAuthenticator {
 
   static isAuthenticated() {
     if (CookieManager.get("master")) {
+      // return true if valid cookie exists (through CookieManager)
       return true
     } else {
+      // return false if invalid or missing cookie
       return false
     }
-    // return true if valid cookie exists (through CookieManager)
-    // return false if invalid or missing cookie
   }
 
   static login(loginInfo) {
@@ -18,7 +18,7 @@ export class DiographAuthenticator {
     }
 
 /*
-    / Try to login with loginInfo through DiographServerManager
+    // Try to login with loginInfo through DiographServerManager
     if (DiographServerManager.authenticate(loginInfo)) {
       // Retrieve tokens from server
       tokens = DiographServerManager.getTokens()
@@ -32,7 +32,7 @@ export class DiographAuthenticator {
   }
 
   static logout() {
-    // CookieManager.destroy()
+    CookieManager.destroy()
   }
 
   static getToken(type) {

@@ -45,11 +45,9 @@ describe('DiographAuthenticator', () => {
 
   describe('logout()', () => {
     it('removes cookie', () => {
-      // Calls cookie removing function
-    });
-
-    it('clears tokens', () => {
-
+      spyOn(CookieManager, 'destroy')
+      DiographAuthenticator.logout()
+      expect(CookieManager.destroy).toHaveBeenCalled()
     });
   })
 
