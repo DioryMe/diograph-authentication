@@ -12,7 +12,8 @@ export class DiographAuthenticator {
     }
   }
 
-  static login(loginInfo) {
+  static login(loginInfo={}) {
+    // Return true if already logged in
     if (this.isAuthenticated()) {
       return true
     }
@@ -29,6 +30,7 @@ export class DiographAuthenticator {
       return false
     }
 */
+
   }
 
   static logout() {

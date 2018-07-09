@@ -23,6 +23,11 @@ describe('DiographAuthenticator', () => {
 
   describe('login()', () => {
 
+    it('return true if already logged in', () => {
+      spyOn(DiographAuthenticator, 'isAuthenticated').and.returnValue(true)
+      expect(DiographAuthenticator.login()).toBe(true)
+    });
+
     describe('with correct login info', () => {
       beforeEach(() => {
         // Mock sending login info to server (DiographServerManager)
