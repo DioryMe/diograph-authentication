@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { DiographAuthenticator } from './diograph-authenticator'
+import { CookieManager } from './cookie-manager'
 
-export interface AuthenticationState { authenticated: boolean, tokens: any }
+export interface AuthenticationState { authenticated: boolean, secrets: any }
 export interface AuthenticationProps { onAuthenticationStateChange: any }
 
 export class DiographAuthentication extends React.Component <AuthenticationProps, AuthenticationState> {
 
   constructor(props) {
     super(props)
-    this.state = { authenticated: false, tokens: null }
+    this.state = { authenticated: true, secrets: CookieManager.getAll() }
+    this.props.onAuthenticationStateChange(this.state.secrets)
   }
 
   render() {
@@ -16,8 +17,11 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
     if (this.state.authenticated) {
       html = (
         <div>
-          You are now logged in! <br/>
+          You are now logged in!
           <button name="Logout" onClick={ () => this.executeLogout() } >Logout</button>
+          <br/>
+          Secrets: <input name="secrets" value={this.state.secrets || ""} onChange={(event) => { this.setState({secrets: event.target.value})} }  />
+          <button name="Save secrets" onClick={ () => this.saveSecrets() } >Save secrets</button>
         </div>
       )
     } else {
@@ -31,22 +35,28 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
     return html
   }
 
+  async saveSecrets() {
+    await CookieManager.save(this.state.secrets)
+    await this.setState({secrets: CookieManager.getAll()})
+    this.props.onAuthenticationStateChange(this.state.secrets)
+  }
+
   async executeLogin(loginInfo) {
-    await DiographAuthenticator.login(loginInfo)
+    // await DiographAuthenticator.login(loginInfo)
     await this.setState({
       authenticated: true,
-      tokens: DiographAuthenticator.retrieveSecrets()
+      secrets: CookieManager.getAll() // DiographAuthenticator.retrieveSecrets()
     })
-    this.props.onAuthenticationStateChange(this.state.tokens)
+    this.props.onAuthenticationStateChange(this.state.secrets)
   }
 
   async executeLogout() {
-    await DiographAuthenticator.logout()
+    CookieManager.destroy() // await DiographAuthenticator.logout()
     await this.setState({
       authenticated: false,
-      tokens: DiographAuthenticator.retrieveSecrets()
+      secrets: null
     })
-    this.props.onAuthenticationStateChange(this.state.tokens)
+    this.props.onAuthenticationStateChange(this.state.secrets)
   }
 
 }

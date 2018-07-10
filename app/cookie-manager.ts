@@ -9,13 +9,9 @@ export class CookieManager {
     return this.content()
   }
 
-  static save(contentHash: object) {
-    if (localStorage.setItem("diograph-authenticator-secrets")) {
-      return true
-    } else {
-      console.log("SAVING FAILED!??!?")
-      return false
-    }
+  static save(content: object) {
+    localStorage.setObject("diograph-authenticator-secrets", content)
+    return true
   }
 
   static destroy() {
@@ -26,7 +22,7 @@ export class CookieManager {
 
   // Placeholder / fixture for cookie content (that we are still missing...)
   private static content() {
-    return localStorage.getItem("diograph-authenticator-secrets")
+    return localStorage.getObject("diograph-authenticator-secrets")
     // return {
     //   "master": "masterTOKEN",
     //   "google-maps": "googleMAPS"
@@ -35,6 +31,14 @@ export class CookieManager {
 
 }
 
+Storage.prototype.setObject = function(key, value) {
+  this.setItem(key, JSON.stringify(value));
+}
+
+Storage.prototype.getObject = function(key) {
+  var value = this.getItem(key);
+  return value && JSON.parse(value);
+}
 
 //       let inputFieldValue = (<HTMLInputElement>document.getElementById("diograph-token-input")).value;
 //       localStorage.setItem("token", inputFieldValue);

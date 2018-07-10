@@ -22,9 +22,9 @@ export class DiographAuthenticator {
     // Try to login with loginInfo through DiographServerManager
     if (DiographServerManager.authenticate(loginInfo)) {
       // Retrieve tokens from server
-      let tokens = DiographServerManager.retrieveSecrets(CookieManager.get("master"))
+      let secrets = DiographServerManager.retrieveSecrets(CookieManager.get("master"))
       // Save tokens to cookie
-      CookieManager.save(tokens)
+      CookieManager.save(secrets)
       return true
     } else {
       return false

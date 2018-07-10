@@ -6,11 +6,11 @@ class App extends React.Component {
 
   render() {
     return <DiographAuthentication
-      onAuthenticationStateChange={(authToken) => this.log(authToken)} />
+      onAuthenticationStateChange={(secrets) => this.log(secrets)} />
   }
 
-  log(authToken) {
-    console.log(authToken)
+  log(secrets) {
+    console.log(JSON.parse(secrets)["master"])
   }
 
 }
