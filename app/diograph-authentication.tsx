@@ -10,6 +10,11 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
     super(props)
     this.state = { authenticated: true, secrets: CookieManager.getAll() }
     this.props.onAuthenticationStateChange(this.state.secrets)
+
+    // TODO: Retrieve master token from url
+    // if (window.location.search.match(/\btoken=+(.*)$/)) {
+    //   localStorage.setItem("token", window.location.search.match(/\btoken=+(.*)$/)[1])
+    // }
   }
 
   render() {
