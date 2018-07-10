@@ -56,7 +56,7 @@ describe('DiographAuthenticator', () => {
     });
   })
 
-  describe('getToken()', () => {
+  describe('retrieveSecrets()', () => {
     describe('when not authenticated', () => {
       it('returns null for everything', () => {
         // all
@@ -66,11 +66,11 @@ describe('DiographAuthenticator', () => {
     });
 
     describe('when authenticated', () => {
-      it('with "all" calls all the retrievers one by one', () => {
+      it('without arguments retrieves all the tokens from cookie', () => {
 
       });
 
-      it('with "google-maps" calls google-map retriever', () => {
+      it('with "google-maps" argument retrieves google-maps secret from cookie', () => {
 
       });
     });
