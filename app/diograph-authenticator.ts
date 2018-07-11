@@ -1,3 +1,4 @@
+/*
 import { LocalStorageManager } from './local-storage-manager'
 import { DiographServerManager } from './diograph-server-manager'
 
@@ -60,5 +61,5 @@ export class DiographAuthenticator {
   }
 
 }
-
+*/
 

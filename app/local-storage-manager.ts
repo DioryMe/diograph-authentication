@@ -1,5 +1,6 @@
 export class LocalStorageManager {
 
+/*
   static get(key: string): string {
     // TODO: Don't catch error if UI can handle and show it
     try {
@@ -9,6 +10,7 @@ export class LocalStorageManager {
       return null
     }
   }
+*/
 
   static getAll(): object {
     // TODO: Don't catch error if UI can handle and show it

@@ -1,3 +1,4 @@
+/*
 import { DiographAuthenticator } from '../app/diograph-authenticator'
 import { LocalStorageManager } from '../app/local-storage-manager'
 
@@ -77,3 +78,4 @@ describe('DiographAuthenticator', () => {
   })
 
 })
+*/

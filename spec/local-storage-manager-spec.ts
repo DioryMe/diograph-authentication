@@ -10,9 +10,10 @@ describe('LocalStorageManager', () => {
 
   beforeEach(() => {
     // Add some content
-    LocalStorageManager.save('{"master": masterToken}')
+    LocalStorageManager.save(JSON.stringify({"master": masterToken}))
   });
 
+/*
   describe('get(key)', () => {
 
     it('returns "masterTOKEN" if key "master" is given', () => {
@@ -25,6 +26,7 @@ describe('LocalStorageManager', () => {
       expect(LocalStorageManager.get("master")).toEqual(null)
     })
   })
+*/
 
   describe('getAll()', () => {
 
@@ -53,7 +55,7 @@ describe('LocalStorageManager', () => {
     it('saves content and return true on success', () => {
       let content = '{"something": "else"}'
       LocalStorageManager.save(content)
-      expect(LocalStorageManager.get("something")).toEqual("else")
+      expect(LocalStorageManager.getAll()["something"]).toEqual("else")
     })
 
     it('raises error if non-object is given as parameter', () => {
@@ -67,7 +69,7 @@ describe('LocalStorageManager', () => {
 
     it('nullifies the localStorage', () => {
       LocalStorageManager.destroy()
-      expect(LocalStorageManager.get("master")).toEqual(null)
+      expect(LocalStorageManager.getAll()).toEqual(null)
     })
 
   })
