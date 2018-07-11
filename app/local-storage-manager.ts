@@ -1,7 +1,7 @@
-export class CookieManager {
+export class LocalStorageManager {
 
   static get(key: string): string {
-    // Return the corresponding value of the given key from cookie
+    // Return the corresponding value of the given key from LocalStorage
     let value = null
     if (this.content()) {
       let parsedContent = JSON.parse(this.content())
@@ -25,12 +25,12 @@ export class CookieManager {
   }
 
   static destroy() {
-    // Destroy cookie
+    // Destroy LocalStorage
     localStorage.removeItem("diograph-authenticator-secrets");
     return false
   }
 
-  // Placeholder / fixture for cookie content (that we are still missing...)
+  // Placeholder / fixture for LocalStorage content (that we are still missing...)
   private static content() {
     return localStorage.getItem("diograph-authenticator-secrets")
     // return {

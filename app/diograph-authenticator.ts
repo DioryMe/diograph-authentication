@@ -1,14 +1,14 @@
-import { CookieManager } from './cookie-manager'
+import { LocalStorageManager } from './local-storage-manager'
 import { DiographServerManager } from './diograph-server-manager'
 
 export class DiographAuthenticator {
 
   static isAuthenticated() {
-    if (CookieManager.get("master")) {
-      // return true if valid cookie exists (through CookieManager)
+    if (LocalStorageManager.get("master")) {
+      // return true if valid LocalStorage exists (through LocalStorageManager)
       return true
     } else {
-      // return false if invalid or missing cookie
+      // return false if invalid or missing LocalStorage
       return false
     }
   }
@@ -22,9 +22,9 @@ export class DiographAuthenticator {
     // Try to login with loginInfo through DiographServerManager
     if (DiographServerManager.authenticate(loginInfo)) {
       // Retrieve tokens from server
-      let secrets = DiographServerManager.retrieveSecrets(CookieManager.get("master"))
-      // Save tokens to cookie
-      CookieManager.save(secrets)
+      let secrets = DiographServerManager.retrieveSecrets(LocalStorageManager.get("master"))
+      // Save tokens to LocalStorage
+      LocalStorageManager.save(secrets)
       return true
     } else {
       return false
@@ -33,7 +33,7 @@ export class DiographAuthenticator {
   }
 
   static logout() {
-    CookieManager.destroy()
+    LocalStorageManager.destroy()
   }
 
   static retrieveSecrets(type: string=undefined) {
@@ -44,16 +44,16 @@ export class DiographAuthenticator {
       }
     }
 
-    // Read everything from cookie
+    // Read everything from LocalStorage
     switch(type) {
       case undefined: {
-        return CookieManager.getAll()
+        return LocalStorageManager.getAll()
       }
       case "master": {
-        return CookieManager.get("master")
+        return LocalStorageManager.get("master")
       }
       case "google-maps": {
-        return CookieManager.get("google-maps")
+        return LocalStorageManager.get("google-maps")
       }
     }
 

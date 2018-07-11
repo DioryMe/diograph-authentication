@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CookieManager } from './cookie-manager'
+import { LocalStorageManager } from './local-storage-manager'
 
 export interface AuthenticationState { authenticated: boolean, secrets: any }
 export interface AuthenticationProps { onAuthenticationStateChange: any }
@@ -8,7 +8,7 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
 
   constructor(props) {
     super(props)
-    let secrets = CookieManager.getAll()
+    let secrets = LocalStorageManager.getAll()
     let authenticated = !!secrets
     this.state = { authenticated: authenticated, secrets: secrets }
     this.props.onAuthenticationStateChange(this.state.secrets)
@@ -43,8 +43,8 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
   }
 
   async saveSecrets() {
-    await CookieManager.save(this.state.secrets)
-    await this.setState({secrets: CookieManager.getAll()})
+    await LocalStorageManager.save(this.state.secrets)
+    await this.setState({secrets: LocalStorageManager.getAll()})
     this.props.onAuthenticationStateChange(this.state.secrets)
   }
 
@@ -52,16 +52,16 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
     // await DiographAuthenticator.login(loginInfo)
     await this.setState({
       authenticated: true,
-      secrets: CookieManager.getAll() // DiographAuthenticator.retrieveSecrets()
+      secrets: LocalStorageManager.getAll() // DiographAuthenticator.retrieveSecrets()
     })
     this.props.onAuthenticationStateChange(this.state.secrets)
   }
 
   async executeLogout() {
-    CookieManager.destroy() // await DiographAuthenticator.logout()
+    LocalStorageManager.destroy() // await DiographAuthenticator.logout()
     await this.setState({
       authenticated: false,
-      secrets: CookieManager.getAll()
+      secrets: LocalStorageManager.getAll()
     })
     this.props.onAuthenticationStateChange(this.state.secrets)
   }

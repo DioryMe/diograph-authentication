@@ -1,21 +1,21 @@
 import { DiographAuthenticator } from '../app/diograph-authenticator'
-import { CookieManager } from '../app/cookie-manager'
+import { LocalStorageManager } from '../app/local-storage-manager'
 
 describe('DiographAuthenticator', () => {
 
   beforeEach(() => {
-    // Mock cookie writer
+    // Mock LocalStorage writer
   })
 
   describe('isAuthenticated()', () => {
 
     it('returns true if master token is retrievable', () => {
-      spyOn(CookieManager, 'get').and.returnValue("masterTOKEN");
+      spyOn(LocalStorageManager, 'get').and.returnValue("masterTOKEN");
       expect(DiographAuthenticator.isAuthenticated()).toBe(true)
     })
 
     it('returns false if cannot retrieve master token', () => {
-      spyOn(CookieManager, 'get').and.returnValue(null);
+      spyOn(LocalStorageManager, 'get').and.returnValue(null);
       expect(DiographAuthenticator.isAuthenticated()).toBe(false)
     })
 
@@ -34,8 +34,8 @@ describe('DiographAuthenticator', () => {
         // Returns success
       });
 
-      it('should create a cookie', () => {
-        // Calls cookie creation function
+      it('should create a LocalStorage', () => {
+        // Calls LocalStorage creation function
       });
     })
 
@@ -49,10 +49,10 @@ describe('DiographAuthenticator', () => {
   })
 
   describe('logout()', () => {
-    it('removes cookie', () => {
-      spyOn(CookieManager, 'destroy')
+    it('removes LocalStorage', () => {
+      spyOn(LocalStorageManager, 'destroy')
       DiographAuthenticator.logout()
-      expect(CookieManager.destroy).toHaveBeenCalled()
+      expect(LocalStorageManager.destroy).toHaveBeenCalled()
     });
   })
 
@@ -66,11 +66,11 @@ describe('DiographAuthenticator', () => {
     });
 
     describe('when authenticated', () => {
-      it('without arguments retrieves all the tokens from cookie', () => {
+      it('without arguments retrieves all the tokens from LocalStorage', () => {
 
       });
 
-      it('with "google-maps" argument retrieves google-maps secret from cookie', () => {
+      it('with "google-maps" argument retrieves google-maps secret from LocalStorage', () => {
 
       });
     });

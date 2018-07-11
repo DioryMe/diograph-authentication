@@ -1,14 +1,14 @@
 import * as React from 'react'
 import { configure, shallow, mount, render } from 'enzyme'
 import { DiographAuthentication } from '../app/diograph-authentication'
-import { CookieManager, LocalStorageMock } from '../app/cookie-manager'
+import { LocalStorageManager, LocalStorageMock } from '../app/local-storage-manager'
 import * as Adapter from 'enzyme-adapter-react-16';
 
 describe('DiographAuthentication', () => {
   let component, authToken, wrapper
   configure({ adapter: new Adapter() })
 
-  // Mock CookieManager / localStorage
+  // Mock LocalStorageManager / localStorage
   const globalAny: any = global;
 
   Object.defineProperty(globalAny, 'localStorage', {
@@ -24,14 +24,14 @@ describe('DiographAuthentication', () => {
     )
     component = wrapper.instance();
 
-    CookieManager.save({
+    LocalStorageManager.save({
       "master": "masterTOKEN",
       "google-maps": "googleMAPS"
     })
   })
 
   it('secrets are given when logged in', () => {
-    // Master token is saved in cookie
+    // Master token is saved in LocalStorage
     component.executeLogin().then(() => {
       expect(authToken).toEqual({
         "master": "masterTOKEN",
@@ -41,7 +41,7 @@ describe('DiographAuthentication', () => {
   })
 
   it('secrets are nullified when logged out', () => {
-    // Master token is not saved in cookie
+    // Master token is not saved in LocalStorage
     component.executeLogout().then(() => {
       expect(authToken).toEqual(null)
     })

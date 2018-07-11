@@ -1,9 +1,9 @@
-import { CookieManager, LocalStorageMock } from '../app/cookie-manager'
+import { LocalStorageManager, LocalStorageMock } from '../app/local-storage-manager'
 
-describe('CookieManager', () => {
+describe('LocalStorageManager', () => {
   let masterToken = "masterTOKEN"
 
-  // Mock CookieManager / localStorage
+  // Mock LocalStorageManager / localStorage
   const globalAny: any = global;
 
   Object.defineProperty(globalAny, 'localStorage', {
@@ -12,13 +12,13 @@ describe('CookieManager', () => {
 
   beforeEach(() => {
     // Add some content
-    CookieManager.save({"master": masterToken})
+    LocalStorageManager.save({"master": masterToken})
   });
 
   describe('get(key)', () => {
 
     it('returns "masterTOKEN" if key "master" is given', () => {
-      expect(CookieManager.get("master")).toEqual(masterToken)
+      expect(LocalStorageManager.get("master")).toEqual(masterToken)
     })
 
   })
@@ -26,14 +26,14 @@ describe('CookieManager', () => {
   describe('getAll()', () => {
 
     it('returns object of secrets', () => {
-      let secrets = CookieManager.getAll()
+      let secrets = LocalStorageManager.getAll()
       expect(secrets).toEqual(jasmine.any(Object))
       expect(secrets["master"]).toEqual(masterToken)
     })
 
     it('returns null if no secrets in LocalStorage after destroy()', () => {
-      CookieManager.destroy()
-      let secrets = CookieManager.getAll()
+      LocalStorageManager.destroy()
+      let secrets = LocalStorageManager.getAll()
       expect(secrets).toBe(null)
     })
 
@@ -43,8 +43,8 @@ describe('CookieManager', () => {
 
     it('saves content and return true on success', () => {
       let content = {"something": "else"}
-      CookieManager.save(content)
-      expect(CookieManager.get("something")).toEqual("else")
+      LocalStorageManager.save(content)
+      expect(LocalStorageManager.get("something")).toEqual("else")
     })
 
   })
@@ -52,8 +52,8 @@ describe('CookieManager', () => {
   describe('destroy()', () => {
 
     it('nullifies the localStorage', () => {
-      CookieManager.destroy()
-      expect(CookieManager.get("master")).toEqual(null)
+      LocalStorageManager.destroy()
+      expect(LocalStorageManager.get("master")).toEqual(null)
     })
 
   })
