@@ -3,8 +3,8 @@ import { CookieManager } from '../app/cookie-manager'
 describe('CookieManager', () => {
   let masterToken = "masterTOKEN"
 
+  // Mock CookieManager / localStorage
   const globalAny: any = global;
-
   var localStorageMock = (function() {
     var store = {};
 

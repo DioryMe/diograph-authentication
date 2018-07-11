@@ -8,20 +8,29 @@ describe('DiographAuthentication', () => {
   let component, authToken, wrapper
   configure({ adapter: new Adapter() })
 
-  beforeEach(() => {
-
-    // Mock CookieManager / localStorage
+  // Mock CookieManager / localStorage
+  const globalAny: any = global;
+  var localStorageMock = (function() {
     var store = {};
-    spyOn(localStorage, 'getItem').and.callFake( (key:string):String => {
-     return store[key] || null;
-    });
-    spyOn(localStorage, 'removeItem').and.callFake((key:string):void =>  {
-      delete store[key];
-    });
-    spyOn(localStorage, 'setItem').and.callFake((key:string, value:string):string =>  {
-      return store[key] = value as string;
-    });
 
+    return {
+      getItem: (key) => {
+        return store[key] || null;
+      },
+      setItem: (key, value) => {
+        store[key] = value.toString();
+      },
+      removeItem: (key) => {
+        delete store[key]
+      }
+    };
+  })();
+
+  Object.defineProperty(globalAny, 'localStorage', {
+    value: localStorageMock
+  });
+
+  beforeEach(() => {
     const changeAuthToken = (token) => { authToken = token }
     wrapper = shallow(
       <DiographAuthentication
