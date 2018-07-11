@@ -9,6 +9,19 @@ describe('DiographAuthentication', () => {
   configure({ adapter: new Adapter() })
 
   beforeEach(() => {
+
+    // Mock CookieManager / localStorage
+    var store = {};
+    spyOn(localStorage, 'getItem').and.callFake( (key:string):String => {
+     return store[key] || null;
+    });
+    spyOn(localStorage, 'removeItem').and.callFake((key:string):void =>  {
+      delete store[key];
+    });
+    spyOn(localStorage, 'setItem').and.callFake((key:string, value:string):string =>  {
+      return store[key] = value as string;
+    });
+
     const changeAuthToken = (token) => { authToken = token }
     wrapper = shallow(
       <DiographAuthentication
@@ -18,7 +31,7 @@ describe('DiographAuthentication', () => {
     component = wrapper.instance();
   })
 
-  it('authToken is given when logged in', () => {
+  it('secrets are given when logged in', () => {
     // Master token is saved in cookie
     spyOn(CookieManager, 'get').and.returnValue("masterTOKEN");
     component.executeLogin().then(() => {
@@ -29,7 +42,7 @@ describe('DiographAuthentication', () => {
     })
   })
 
-  it('authToken is null when logged out', () => {
+  it('secrets are nullified when logged out', () => {
     // Master token is not saved in cookie
     spyOn(CookieManager, 'get').and.returnValue(null);
     component.executeLogout().then(() => {
