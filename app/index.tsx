@@ -10,7 +10,8 @@ class App extends React.Component {
   }
 
   log(secrets) {
-    console.log(JSON.parse(secrets)["master"])
+    let retrievedSecrets = secrets ? JSON.parse(secrets)["master"] : secrets
+    console.log(retrievedSecrets)
   }
 
 }
