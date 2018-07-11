@@ -45,12 +45,13 @@ export class LocalStorageManager {
     localStorage.setItem("diograph-authenticator-secrets", content)
   }
 
-  // Placeholder / fixture for LocalStorage content (that we are still missing...)
+  // Preprocess LocalStorage content by parsing it
   private static content(): object {
     try {
       let content = localStorage.getItem("diograph-authenticator-secrets")
       return JSON.parse(content)
     } catch {
+      // TODO: Pass this message to UI => now only logged to console
       let errorMessage = "Invalid LocalStorageContent: content should be parseable to object (JSON parse error)"
       console.log(errorMessage)
       throw new Error(errorMessage)
