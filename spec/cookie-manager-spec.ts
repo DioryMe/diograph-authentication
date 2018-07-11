@@ -1,7 +1,7 @@
 import { CookieManager } from '../app/cookie-manager'
 
 describe('CookieManager', () => {
-  let masterToken
+  let masterToken = "masterTOKEN"
 
   const globalAny: any = global;
 
@@ -27,14 +27,12 @@ describe('CookieManager', () => {
 
   beforeEach(() => {
     // Add some content
-    masterToken = "masterTOKEN"
     CookieManager.save({"master": masterToken})
   });
 
   describe('get(key)', () => {
 
     it('returns "masterTOKEN" if key "master" is given', () => {
-      expect(true).toBe(true)
       expect(CookieManager.get("master")).toEqual(masterToken)
     })
 
@@ -54,7 +52,7 @@ describe('CookieManager', () => {
 
     it('saves content and return true on success', () => {
       let content = {"something": "else"}
-      expect(CookieManager.save(content)).toBe(true)
+      CookieManager.save(content)
       expect(CookieManager.get("something")).toEqual("else")
     })
 

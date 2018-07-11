@@ -2,11 +2,12 @@ export class CookieManager {
 
   static get(key: string): string {
     // Return the corresponding value of the given key from cookie
-    if (this.content() && this.content()[key]) {
-      return JSON.parse(this.content()[key])
-    } else {
-      return null
+    let value = null
+    if (this.content()) {
+      let parsedContent = JSON.parse(this.content())
+      value = parsedContent[key]
     }
+    return value
   }
 
   static getAll(): object {
