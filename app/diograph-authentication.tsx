@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { LocalStorageManager } from './local-storage-manager'
 
-export interface AuthenticationState { authenticated: boolean, secrets: any }
+export interface AuthenticationState {
+  authenticated: boolean,
+  secrets: any,
+  errors: string
+}
 export interface AuthenticationProps { onSecretsChange: any }
 
 export class DiographAuthentication extends React.Component <AuthenticationProps, AuthenticationState> {
@@ -10,7 +14,11 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
     super(props)
     let secrets = LocalStorageManager.getAll()
     let authenticated = !!secrets
-    this.state = { authenticated: authenticated, secrets: secrets }
+    this.state = {
+      authenticated: authenticated,
+      secrets: secrets,
+      errors: null
+    }
     this.props.onSecretsChange(this.state.secrets)
 
     // TODO: Retrieve master token from url
@@ -24,11 +32,15 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
     if (this.state.authenticated) {
       html = (
         <div>
+          <div>
           You are now logged in!
           <button name="Logout" onClick={ () => this.executeLogout() } >Logout</button>
-          <br/>
-          Secrets: <input name="secrets" value={this.state.secrets || ""} onChange={(event) => { this.setState({secrets: event.target.value})} }  />
-          <button name="Save secrets" onClick={ () => this.saveSecrets() } >Save secrets</button>
+          </div>
+          <div>
+            Secrets: <input name="secrets" value={this.state.secrets || ""} onChange={(event) => { this.setState({secrets: event.target.value})} }  />
+            <button name="Save secrets" onClick={ () => this.saveSecrets() } >Save secrets</button>
+            <div style={{color:'red'}}>{this.state.errors}</div>
+          </div>
         </div>
       )
     } else {
@@ -43,9 +55,16 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
   }
 
   async saveSecrets() {
-    await LocalStorageManager.save(this.state.secrets)
-    await this.setState({secrets: LocalStorageManager.getAll()})
-    this.props.onSecretsChange(this.state.secrets)
+    let errorResponse = LocalStorageManager.save(this.state.secrets)
+    if (errorResponse === true) {
+      await this.setState({
+        secrets: LocalStorageManager.getAll(),
+        errors: null
+      })
+      this.props.onSecretsChange(this.state.secrets)
+    } else {
+      this.setState({errors: errorResponse})
+    }
   }
 
   async executeLogin(loginInfo) {

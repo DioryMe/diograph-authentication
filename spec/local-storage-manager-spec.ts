@@ -22,9 +22,7 @@ describe('LocalStorageManager', () => {
     it('handles non-json secrets correctly', () => {
       // TODO: Mock LocalStorageMock instead of creating and using a special method for this purpose
       LocalStorageManager.saveWhatever("non-json-content")
-      let errorFunction = () => LocalStorageManager.get("master")
-      let errorMessage = "Invalid LocalStorageContent: content should be parseable to object"
-      expect(errorFunction).toThrow(new Error(errorMessage));
+      expect(LocalStorageManager.get("master")).toEqual(null)
     })
   })
 
@@ -45,9 +43,7 @@ describe('LocalStorageManager', () => {
     it('handles non-json secrets correctly', () => {
       // TODO: Mock LocalStorageMock instead of creating and using a special method for this purpose
       LocalStorageManager.saveWhatever("non-json-content")
-      let errorFunction = () => LocalStorageManager.getAll()
-      let errorMessage = "Invalid LocalStorageContent: content should be parseable to object"
-      expect(errorFunction).toThrow(new Error(errorMessage));
+      expect(LocalStorageManager.getAll()).toEqual(null)
     })
 
   })
@@ -63,7 +59,7 @@ describe('LocalStorageManager', () => {
     it('raises error if non-object is given as parameter', () => {
       let errorFunction = () => LocalStorageManager.save("non-json-content")
       let errorMessage = "Invalid params: content should be an object, not a string"
-      expect(errorFunction).toThrow(new Error(errorMessage));
+      expect(errorFunction()).toEqual(errorMessage);
     })
   })
 

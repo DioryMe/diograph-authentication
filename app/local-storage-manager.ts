@@ -1,29 +1,33 @@
 export class LocalStorageManager {
 
   static get(key: string): string {
-    // Return the corresponding value of the given key from LocalStorage
-    let value = null
-    if (this.content()) {
-      let parsedContent = JSON.parse(this.content())
-      value = parsedContent[key]
+    // TODO: Don't catch error if UI can handle and show it
+    try {
+      let secrets = this.content()
+      return secrets[key]
+    } catch {
+      return null
     }
-    return value
   }
 
   static getAll(): object {
-    if (this.content()) {
-      return JSON.parse(this.content());
-    } else {
+    // TODO: Don't catch error if UI can handle and show it
+    try {
+      let secrets = this.content()
+      return secrets
+    } catch {
       return null
     }
   }
 
   static save(content: any) {
     if (typeof content !== "object") {
-      throw new Error("Invalid params: content should be an object, not a " + typeof content)
+      let errorMessage  = "Invalid params: content should be an object, not a " + typeof content
+      console.log(errorMessage)
+      return errorMessage
+      // throw new Error(errorMessage)
     }
     let stringifiedContent = JSON.stringify(content)
-    // console.log(stringifiedContent)
     localStorage.setItem("diograph-authenticator-secrets", stringifiedContent)
     return true
   }
@@ -40,21 +44,20 @@ export class LocalStorageManager {
 
   // Placeholder / fixture for LocalStorage content (that we are still missing...)
   private static content() {
-    return localStorage.getItem("diograph-authenticator-secrets")
-    // return {
-    //   "master": "masterTOKEN",
-    //   "google-maps": "googleMAPS"
-    // }
+    try {
+      let content = localStorage.getItem("diograph-authenticator-secrets")
+      return JSON.parse(content)
+    } catch {
+      let errorMessage = "Invalid LocalStorageContent: content should be parseable to object (JSON parse error)"
+      console.log(errorMessage)
+      throw new Error(errorMessage)
+    }
   }
 
 }
 
 export class LocalStorageMock {
   static store = {}
-
-  // constructor() {
-  //   store = {}
-  // }
 
   static getItem(key) {
     return this.store[key] || null;
