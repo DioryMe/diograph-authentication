@@ -3,19 +3,29 @@ import { CookieManager } from '../app/cookie-manager'
 describe('CookieManager', () => {
   let masterToken
 
-  beforeEach(() => {
+  const globalAny: any = global;
+
+  var localStorageMock = (function() {
     var store = {};
 
-    spyOn(localStorage, 'getItem').and.callFake( (key:string):String => {
-     return store[key] || null;
-    });
-    spyOn(localStorage, 'removeItem').and.callFake((key:string):void =>  {
-      delete store[key];
-    });
-    spyOn(localStorage, 'setItem').and.callFake((key:string, value:string):string =>  {
-      return store[key] = <string>value;
-    });
+    return {
+      getItem: (key) => {
+        return store[key] || null;
+      },
+      setItem: (key, value) => {
+        store[key] = value.toString();
+      },
+      removeItem: (key) => {
+        delete store[key]
+      }
+    };
+  })();
 
+  Object.defineProperty(globalAny, 'localStorage', {
+    value: localStorageMock
+  });
+
+  beforeEach(() => {
     // Add some content
     masterToken = "masterTOKEN"
     CookieManager.save({"master": masterToken})
@@ -23,9 +33,9 @@ describe('CookieManager', () => {
 
   describe('get(key)', () => {
 
-    fit('returns "masterTOKEN" if key "master" is given', () => {
+    it('returns "masterTOKEN" if key "master" is given', () => {
       expect(true).toBe(true)
-      // expect(CookieManager.get("master")).toEqual(masterToken)
+      expect(CookieManager.get("master")).toEqual(masterToken)
     })
 
   })

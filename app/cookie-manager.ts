@@ -2,7 +2,11 @@ export class CookieManager {
 
   static get(key: string): string {
     // Return the corresponding value of the given key from cookie
-    return this.content()[key] && JSON.parse(this.content()[key]);
+    if (this.content() && this.content()[key]) {
+      return JSON.parse(this.content()[key])
+    } else {
+      return null
+    }
   }
 
   static getAll(): object {
@@ -11,7 +15,7 @@ export class CookieManager {
 
   static save(content: object) {
     let stringifiedContent = JSON.stringify(content)
-    localStorage.setObject("diograph-authenticator-secrets", stringifiedContent)
+    localStorage.setItem("diograph-authenticator-secrets", stringifiedContent)
     return true
   }
 
@@ -23,7 +27,7 @@ export class CookieManager {
 
   // Placeholder / fixture for cookie content (that we are still missing...)
   private static content() {
-    return localStorage.getObject("diograph-authenticator-secrets")
+    return localStorage.getItem("diograph-authenticator-secrets")
     // return {
     //   "master": "masterTOKEN",
     //   "google-maps": "googleMAPS"
