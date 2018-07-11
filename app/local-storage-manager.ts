@@ -21,8 +21,10 @@ export class LocalStorageManager {
   }
 
   static save(content: any) {
-    if (typeof content !== "object") {
-      let errorMessage  = "Invalid params: content should be an object, not a " + typeof content
+    try {
+      let parsedContent = JSON.parse(content)
+    } catch {
+      let errorMessage  = "Invalid params: content should be parseable string"
       console.log(errorMessage)
       return errorMessage
       // throw new Error(errorMessage)
