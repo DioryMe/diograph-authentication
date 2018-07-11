@@ -4,9 +4,7 @@ describe('LocalStorageManager', () => {
   let masterToken = "masterTOKEN"
 
   // Mock LocalStorageManager / localStorage
-  const globalAny: any = global;
-
-  Object.defineProperty(globalAny, 'localStorage', {
+  Object.defineProperty(global, 'localStorage', {
     value: LocalStorageMock
   });
 

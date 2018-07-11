@@ -5,21 +5,19 @@ import { LocalStorageManager, LocalStorageMock } from '../app/local-storage-mana
 import * as Adapter from 'enzyme-adapter-react-16';
 
 describe('DiographAuthentication', () => {
-  let component, authToken, wrapper
+  let component, secrets, wrapper
   configure({ adapter: new Adapter() })
 
   // Mock LocalStorageManager / localStorage
-  const globalAny: any = global;
-
-  Object.defineProperty(globalAny, 'localStorage', {
+  Object.defineProperty(global, 'localStorage', {
     value: LocalStorageMock
   });
 
   beforeEach(() => {
-    const changeAuthToken = (token) => { authToken = token }
+    const updateSecrets = (retrievedSecrets) => { secrets = retrievedSecrets }
     wrapper = shallow(
       <DiographAuthentication
-        onAuthenticationStateChange={changeAuthToken}
+        onSecretsChange={updateSecrets}
       />
     )
     component = wrapper.instance();
@@ -33,7 +31,7 @@ describe('DiographAuthentication', () => {
   it('secrets are given when logged in', () => {
     // Master token is saved in LocalStorage
     component.executeLogin().then(() => {
-      expect(authToken).toEqual({
+      expect(secrets).toEqual({
         "master": "masterTOKEN",
         "google-maps": "googleMAPS"
       })
@@ -43,7 +41,7 @@ describe('DiographAuthentication', () => {
   it('secrets are nullified when logged out', () => {
     // Master token is not saved in LocalStorage
     component.executeLogout().then(() => {
-      expect(authToken).toEqual(null)
+      expect(secrets).toEqual(null)
     })
   })
 

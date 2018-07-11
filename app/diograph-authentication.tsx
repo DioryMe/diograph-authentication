@@ -2,7 +2,7 @@ import * as React from 'react';
 import { LocalStorageManager } from './local-storage-manager'
 
 export interface AuthenticationState { authenticated: boolean, secrets: any }
-export interface AuthenticationProps { onAuthenticationStateChange: any }
+export interface AuthenticationProps { onSecretsChange: any }
 
 export class DiographAuthentication extends React.Component <AuthenticationProps, AuthenticationState> {
 
@@ -11,7 +11,7 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
     let secrets = LocalStorageManager.getAll()
     let authenticated = !!secrets
     this.state = { authenticated: authenticated, secrets: secrets }
-    this.props.onAuthenticationStateChange(this.state.secrets)
+    this.props.onSecretsChange(this.state.secrets)
 
     // TODO: Retrieve master token from url
     // if (window.location.search.match(/\btoken=+(.*)$/)) {
@@ -45,7 +45,7 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
   async saveSecrets() {
     await LocalStorageManager.save(this.state.secrets)
     await this.setState({secrets: LocalStorageManager.getAll()})
-    this.props.onAuthenticationStateChange(this.state.secrets)
+    this.props.onSecretsChange(this.state.secrets)
   }
 
   async executeLogin(loginInfo) {
@@ -54,7 +54,7 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
       authenticated: true,
       secrets: LocalStorageManager.getAll() // DiographAuthenticator.retrieveSecrets()
     })
-    this.props.onAuthenticationStateChange(this.state.secrets)
+    this.props.onSecretsChange(this.state.secrets)
   }
 
   async executeLogout() {
@@ -63,7 +63,7 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
       authenticated: false,
       secrets: LocalStorageManager.getAll()
     })
-    this.props.onAuthenticationStateChange(this.state.secrets)
+    this.props.onSecretsChange(this.state.secrets)
   }
 
 }
