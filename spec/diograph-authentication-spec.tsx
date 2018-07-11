@@ -22,10 +22,10 @@ describe('DiographAuthentication', () => {
     )
     component = wrapper.instance();
 
-    LocalStorageManager.save({
+    LocalStorageManager.save(JSON.stringify({
       "master": "masterTOKEN",
       "google-maps": "googleMAPS"
-    })
+    }))
   })
 
   it('secrets are given when logged in', () => {

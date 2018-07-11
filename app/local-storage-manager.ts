@@ -20,24 +20,17 @@ export class LocalStorageManager {
     }
   }
 
-  static save(content: any) {
-    if (typeof content == "string") {
-      try {
-        let parsedContent = JSON.parse(content)
-      } catch {
-        let errorMessage  = "Invalid params: content should be parseable string"
-        console.log(errorMessage)
-        return errorMessage
-        // throw new Error(errorMessage)
-      }
-      localStorage.setItem("diograph-authenticator-secrets", content)
-      return true
-    } else {
-      console.log(content)
-      localStorage.setItem("diograph-authenticator-secrets", JSON.stringify(content))
-      return true
+  static save(content: string): any {
+    try {
+      let parsedContent = JSON.parse(content)
+    } catch {
+      let errorMessage  = "Invalid params: content should be parseable string"
+      console.log(errorMessage)
+      return errorMessage
+      // throw new Error(errorMessage)
     }
-
+    localStorage.setItem("diograph-authenticator-secrets", content)
+    return true
   }
 
   static destroy() {

@@ -10,7 +10,7 @@ describe('LocalStorageManager', () => {
 
   beforeEach(() => {
     // Add some content
-    LocalStorageManager.save({"master": masterToken})
+    LocalStorageManager.save('{"master": masterToken}')
   });
 
   describe('get(key)', () => {
@@ -51,7 +51,7 @@ describe('LocalStorageManager', () => {
   describe('save(content)', () => {
 
     it('saves content and return true on success', () => {
-      let content = {"something": "else"}
+      let content = '{"something": "else"}'
       LocalStorageManager.save(content)
       expect(LocalStorageManager.get("something")).toEqual("else")
     })

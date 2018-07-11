@@ -22,7 +22,7 @@ export class DiographAuthenticator {
     // Try to login with loginInfo through DiographServerManager
     if (DiographServerManager.authenticate(loginInfo)) {
       // Retrieve tokens from server
-      let secrets = DiographServerManager.retrieveSecrets(LocalStorageManager.get("master"))
+      let secrets: string = DiographServerManager.retrieveSecrets(LocalStorageManager.get("master"))
       // Save tokens to LocalStorage
       LocalStorageManager.save(secrets)
       return true
@@ -36,18 +36,18 @@ export class DiographAuthenticator {
     LocalStorageManager.destroy()
   }
 
-  static retrieveSecrets(type: string=undefined) {
+  static retrieveSecrets(type: string=undefined): string {
     if (!this.isAuthenticated()) {
-      return {
+      return JSON.stringify({
         "master": null,
         "google-maps": null
-      }
+      })
     }
 
     // Read everything from LocalStorage
     switch(type) {
       case undefined: {
-        return LocalStorageManager.getAll()
+        return JSON.stringify(LocalStorageManager.getAll())
       }
       case "master": {
         return LocalStorageManager.get("master")
