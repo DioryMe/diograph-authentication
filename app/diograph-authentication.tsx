@@ -61,7 +61,7 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
     CookieManager.destroy() // await DiographAuthenticator.logout()
     await this.setState({
       authenticated: false,
-      secrets: null
+      secrets: CookieManager.getAll()
     })
     this.props.onAuthenticationStateChange(this.state.secrets)
   }

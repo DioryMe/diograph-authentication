@@ -23,11 +23,15 @@ describe('DiographAuthentication', () => {
       />
     )
     component = wrapper.instance();
+
+    CookieManager.save({
+      "master": "masterTOKEN",
+      "google-maps": "googleMAPS"
+    })
   })
 
   it('secrets are given when logged in', () => {
     // Master token is saved in cookie
-    spyOn(CookieManager, 'get').and.returnValue("masterTOKEN");
     component.executeLogin().then(() => {
       expect(authToken).toEqual({
         "master": "masterTOKEN",
@@ -38,12 +42,8 @@ describe('DiographAuthentication', () => {
 
   it('secrets are nullified when logged out', () => {
     // Master token is not saved in cookie
-    spyOn(CookieManager, 'get').and.returnValue(null);
     component.executeLogout().then(() => {
-      expect(authToken).toEqual({
-        "master": null,
-        "google-maps": null
-      })
+      expect(authToken).toEqual(null)
     })
   })
 

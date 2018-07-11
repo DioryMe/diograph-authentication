@@ -31,6 +31,12 @@ describe('CookieManager', () => {
       expect(secrets["master"]).toEqual(masterToken)
     })
 
+    it('returns null if no secrets in LocalStorage after destroy()', () => {
+      CookieManager.destroy()
+      let secrets = CookieManager.getAll()
+      expect(secrets).toBe(null)
+    })
+
   })
 
   describe('save(content)', () => {

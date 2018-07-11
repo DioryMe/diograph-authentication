@@ -11,7 +11,11 @@ export class CookieManager {
   }
 
   static getAll(): object {
-    return this.content() && JSON.parse(this.content());
+    if (this.content()) {
+      return JSON.parse(this.content());
+    } else {
+      return null
+    }
   }
 
   static save(content: object) {
