@@ -37,6 +37,28 @@ export class CookieManager {
 
 }
 
+export class LocalStorageMock {
+  static store = {}
+
+  // constructor() {
+  //   store = {}
+  // }
+
+  static getItem(key) {
+    return this.store[key] || null;
+  }
+
+  static setItem(key, value) {
+    this.store[key] = value.toString();
+  }
+
+  static removeItem(key) {
+    delete this.store[key]
+  }
+
+}
+
+
 //       let inputFieldValue = (<HTMLInputElement>document.getElementById("diograph-token-input")).value;
 //       localStorage.setItem("token", inputFieldValue);
 //       localStorage.setItem("endpoint", DiographAuthentication.isProduction ? "http://diory-server.herokuapp.com/v1/" : "http://localhost:3000/v1/");
