@@ -18,8 +18,12 @@ export class LocalStorageManager {
     }
   }
 
-  static save(content: object) {
+  static save(content: any) {
+    if (typeof content !== "object") {
+      throw new Error("Invalid params: content should be an object, not a " + typeof content)
+    }
     let stringifiedContent = JSON.stringify(content)
+    // console.log(stringifiedContent)
     localStorage.setItem("diograph-authenticator-secrets", stringifiedContent)
     return true
   }

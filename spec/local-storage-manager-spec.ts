@@ -45,6 +45,11 @@ describe('LocalStorageManager', () => {
       expect(LocalStorageManager.get("something")).toEqual("else")
     })
 
+    it('raises error if non-object is given as parameter', () => {
+      let errorFunction = () => LocalStorageManager.save("non-json-content")
+      let errorMessage = "Invalid params: content should be an object, not a string"
+      expect(errorFunction).toThrow(new Error(errorMessage));
+    })
   })
 
   describe('destroy()', () => {
