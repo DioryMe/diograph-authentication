@@ -19,6 +19,13 @@ describe('LocalStorageManager', () => {
       expect(LocalStorageManager.get("master")).toEqual(masterToken)
     })
 
+    it('handles non-json secrets correctly', () => {
+      // TODO: Mock LocalStorageMock instead of creating and using a special method for this purpose
+      LocalStorageManager.saveWhatever("non-json-content")
+      let errorFunction = () => LocalStorageManager.get("master")
+      let errorMessage = "Invalid LocalStorageContent: content should be parseable to object"
+      expect(errorFunction).toThrow(new Error(errorMessage));
+    })
   })
 
   describe('getAll()', () => {
@@ -33,6 +40,14 @@ describe('LocalStorageManager', () => {
       LocalStorageManager.destroy()
       let secrets = LocalStorageManager.getAll()
       expect(secrets).toBe(null)
+    })
+
+    it('handles non-json secrets correctly', () => {
+      // TODO: Mock LocalStorageMock instead of creating and using a special method for this purpose
+      LocalStorageManager.saveWhatever("non-json-content")
+      let errorFunction = () => LocalStorageManager.getAll()
+      let errorMessage = "Invalid LocalStorageContent: content should be parseable to object"
+      expect(errorFunction).toThrow(new Error(errorMessage));
     })
 
   })

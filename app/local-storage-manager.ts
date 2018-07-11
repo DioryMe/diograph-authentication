@@ -34,6 +34,10 @@ export class LocalStorageManager {
     return false
   }
 
+  static saveWhatever(content) {
+    localStorage.setItem("diograph-authenticator-secrets", content)
+  }
+
   // Placeholder / fixture for LocalStorage content (that we are still missing...)
   private static content() {
     return localStorage.getItem("diograph-authenticator-secrets")
