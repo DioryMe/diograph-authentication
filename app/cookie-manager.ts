@@ -2,15 +2,16 @@ export class CookieManager {
 
   static get(key: string): string {
     // Return the corresponding value of the given key from cookie
-    return this.content()[key]
+    return this.content()[key] && JSON.parse(this.content()[key]);
   }
 
   static getAll(): object {
-    return this.content()
+    return this.content() && JSON.parse(this.content());
   }
 
   static save(content: object) {
-    localStorage.setObject("diograph-authenticator-secrets", content)
+    let stringifiedContent = JSON.stringify(content)
+    localStorage.setObject("diograph-authenticator-secrets", stringifiedContent)
     return true
   }
 
@@ -29,15 +30,6 @@ export class CookieManager {
     // }
   }
 
-}
-
-Storage.prototype.setObject = function(key, value) {
-  this.setItem(key, JSON.stringify(value));
-}
-
-Storage.prototype.getObject = function(key) {
-  var value = this.getItem(key);
-  return value && JSON.parse(value);
 }
 
 //       let inputFieldValue = (<HTMLInputElement>document.getElementById("diograph-token-input")).value;
