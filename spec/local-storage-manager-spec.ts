@@ -58,7 +58,7 @@ describe('LocalStorageManager', () => {
 
     it('raises error if non-object is given as parameter', () => {
       let errorFunction = () => LocalStorageManager.save("non-json-content")
-      let errorMessage = "Invalid params: content should be an object, not a string"
+      let errorMessage = "Invalid params: content should be parseable string"
       expect(errorFunction()).toEqual(errorMessage);
     })
   })
