@@ -21,17 +21,23 @@ export class LocalStorageManager {
   }
 
   static save(content: any) {
-    try {
-      let parsedContent = JSON.parse(content)
-    } catch {
-      let errorMessage  = "Invalid params: content should be parseable string"
-      console.log(errorMessage)
-      return errorMessage
-      // throw new Error(errorMessage)
+    if (typeof content == "string") {
+      try {
+        let parsedContent = JSON.parse(content)
+      } catch {
+        let errorMessage  = "Invalid params: content should be parseable string"
+        console.log(errorMessage)
+        return errorMessage
+        // throw new Error(errorMessage)
+      }
+      localStorage.setItem("diograph-authenticator-secrets", content)
+      return true
+    } else {
+      console.log(content)
+      localStorage.setItem("diograph-authenticator-secrets", JSON.stringify(content))
+      return true
     }
-    let stringifiedContent = JSON.stringify(content)
-    localStorage.setItem("diograph-authenticator-secrets", stringifiedContent)
-    return true
+
   }
 
   static destroy() {
@@ -45,7 +51,7 @@ export class LocalStorageManager {
   }
 
   // Placeholder / fixture for LocalStorage content (that we are still missing...)
-  private static content() {
+  private static content(): object {
     try {
       let content = localStorage.getItem("diograph-authenticator-secrets")
       return JSON.parse(content)

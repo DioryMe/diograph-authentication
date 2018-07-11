@@ -3,7 +3,8 @@ import { LocalStorageManager } from './local-storage-manager'
 
 export interface AuthenticationState {
   authenticated: boolean,
-  secrets: any,
+  secrets: object,
+  inputFieldValue: string,
   errors: string
 }
 export interface AuthenticationProps { onSecretsChange: any }
@@ -17,6 +18,7 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
     this.state = {
       authenticated: authenticated,
       secrets: secrets,
+      inputFieldValue: JSON.stringify(secrets),
       errors: null
     }
     this.props.onSecretsChange(this.state.secrets)
@@ -37,7 +39,7 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
           <button name="Logout" onClick={ () => this.executeLogout() } >Logout</button>
           </div>
           <div>
-            Secrets: <input name="secrets" value={this.state.secrets || ""} onChange={(event) => { this.setState({secrets: event.target.value})} }  />
+            Secrets: <input name="secrets" value={this.state.inputFieldValue || ""} onChange={(event) => { this.setState({inputFieldValue: event.target.value})} }  />
             <button name="Save secrets" onClick={ () => this.saveSecrets() } >Save secrets</button>
             <div style={{color:'red'}}>{this.state.errors}</div>
           </div>
@@ -55,10 +57,11 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
   }
 
   async saveSecrets() {
-    let errorResponse = LocalStorageManager.save(this.state.secrets)
+    let errorResponse = LocalStorageManager.save(this.state.inputFieldValue)
     if (errorResponse === true) {
       await this.setState({
         secrets: LocalStorageManager.getAll(),
+        inputFieldValue: JSON.stringify(LocalStorageManager.getAll()),
         errors: null
       })
       this.props.onSecretsChange(this.state.secrets)
@@ -71,6 +74,7 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
     // await DiographAuthenticator.login(loginInfo)
     await this.setState({
       authenticated: true,
+      inputFieldValue: JSON.stringify(LocalStorageManager.getAll()),
       secrets: LocalStorageManager.getAll() // DiographAuthenticator.retrieveSecrets()
     })
     this.props.onSecretsChange(this.state.secrets)
@@ -80,6 +84,7 @@ export class DiographAuthentication extends React.Component <AuthenticationProps
     LocalStorageManager.destroy() // await DiographAuthenticator.logout()
     await this.setState({
       authenticated: false,
+      inputFieldValue: JSON.stringify(LocalStorageManager.getAll()),
       secrets: LocalStorageManager.getAll()
     })
     this.props.onSecretsChange(this.state.secrets)
